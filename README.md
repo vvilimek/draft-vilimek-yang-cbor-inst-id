@@ -1,13 +1,10 @@
-# Internet-Draft Template Repository
+# Encoding rules of YANG 'intance-identifier' in the Concise Binary Object Representation (CBOR)
 
-Use this repository as a template if you want to start working on
-[IETF](https://www.ietf.org/) documents. [Click here to create a new repository using the
-template](https://github.com/martinthomson/internet-draft-template/generate).
-Make sure to check "Include all branches", or you will need to enable GitHub Pages manually.
+We strive to update the RFC 9254 Encoding of Data Modeled with YANG in the Concise Binary Object Representation (CBOR).
 
-[Read the
-instructions](https://github.com/martinthomson/i-d-template/blob/main/doc/TEMPLATE.md)
-for more information.
+The goal of this draft is to define rules of previously left out cases. These cases include:
+ - encoding rules for leaf-list entries
+ - encoding rules for keyless list entries 
 
-Once you have created your own repository, start work by
-[renaming the `draft-todo-yourname-protocol.md` file](../../edit/main/draft-todo-yourname-protocol.md).
+If you have any suggestion or comment, please feel free to create an issue or pull request.
+
