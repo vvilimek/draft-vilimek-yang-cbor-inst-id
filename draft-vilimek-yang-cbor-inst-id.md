@@ -171,7 +171,7 @@ Definition example adapted from {{-yang}}:
 container system {
   ...
   leaf reporting-entity {
-    type instance-identifier;  
+    type instance-identifier;
   }
 }
 ~~~
@@ -254,15 +254,15 @@ list user-group {
 }
 ~~~
 
-CBOR diagnostic notation: `[ 61000, "restricted", "eve" ]` 
+CBOR diagnostic notation: `[ 61000, "restricted", "eve" ]`
 
 CBOR encoding:
 ~~~ cbor-pretty
-83   # array(3) 
+83   # array(3)
    19 EE48  # 61000
    6A # text(10)
       72657374726963746564 # "resricted"
-   63 # text(3)   
+   63 # text(3)
       657665 # "eve"
 ~~~
 
@@ -275,7 +275,7 @@ CBOR diagnostic notation: `[ 61000, "restricted" ]`
 
 CBOR encoding:
 ~~~ cbor-pretty
-83   # array(3) 
+83   # array(3)
    19 EE48 # 61000
    6A # text(10)
       72657374726963746564 # "resricted"
@@ -307,7 +307,7 @@ CBOR encoding:
 83 # array(3)
    19 F230 # 62000
    64 # text(4)
-      636F7265 # "core" 
+      636F7265 # "core"
    82 # array(2)
       19 F6F6 # 60000
       6A # text(10)
