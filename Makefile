@@ -1,13 +1,18 @@
-.PHONY: all draft-xml draft-txt clean
+# based on Makefile for similar Markdown draft
+# https://github.com/cabo/yang-standin
 
-all: draft-xml draft-txt
+LIBDIR := lib
+include $(LIBDIR)/main.mk
 
-draft-xml: draft-vilimek-yang-cbor-inst-id.md
-	kramdown-rfc draft-vilimek-yang-cbor-inst-id.md > draft-vilimek-yang-cbor-inst-id.xml
-
-draft-txt: draft-vilimek-yang-cbor-inst-id.xml
-	@# -P no pagination (same as RFC 9254)
-	xml2rfc -P draft-vilimek-yang-cbor-inst-id.xml
-
-clean:
-	rm -rf draft-vilimek-yang-cbor-inst-id.{xml,txt} .refcache
+$(LIBDIR)/main.mk:
+ifneq (,$(shell grep "path *= *$(LIBDIR)" .gitmodules 2>/dev/null))
+	git submodule sync
+	git submodule update --init
+else
+ifneq (,$(wildcard $(ID_TEMPLATE_HOME)))
+	ln -s "$(ID_TEMPLATE_HOME)" $(LIBDIR)
+else
+	git clone -q --depth 10 -b main \
+	    https://github.com/martinthomson/i-d-template $(LIBDIR)
+endif
+endif
