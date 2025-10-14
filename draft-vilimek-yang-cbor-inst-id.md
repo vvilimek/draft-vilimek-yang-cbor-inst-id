@@ -41,6 +41,7 @@ normative:
 
 informative:
   RFC6241: netconf
+  RFC7951: yang-json
   RFC8040: restconf
   RFC9130: isis
 
@@ -64,15 +65,9 @@ TODO Introduction
 The following terms are defiend in {{-yang}}:
 
 - list
-
-- list entry
-
 - leaf-list
-
-- leaf-list entry
-
+- leaf
 - container
-
 - instance-identifier
 
 The following term is defined in {{-cbor}}:
@@ -82,14 +77,16 @@ The following term is defined in {{-cbor}}:
 The following terms are defined in {{-yang-cbor}}:
 
 - delta (of YANG SIDs)
-
 - absolute SID
 
 The following terms are defined in {{-yang-sid}}:
 
 - item
-
 - YANG Schema Item iDentifier (or "YANG SID" or simply "SID")
+
+Note that the {{-yang-cbor}} also define term YANG Schema Item iDentifier but the definition describe the same term.
+
+TODO: use the "The following terms are used within this document:" header?
 
 Keyless list:
 : Is config false YANG list without any keys.
@@ -98,15 +95,14 @@ Keyed list:
 : Is YANG list that is not a keyless list. It is either a config true list or
   config false list with at least one key.
 
-Note that keyless list might be inside keyed list but not vice versa. Keyless
-list might be inside another keyless list, same thing holds for keyed lists.
-
 Single instance node:
 : Is a instance node with at most one possible instantiation. Instantiations of
   top-level containers are single instance nodes, instantiations of leafs of
-  toplevel containers are single instance nodes. No list or leaf-list entries are
+  toplevel containers are single instance nodes. Container and leaf
+  instantiations of single instance node are also single instance nodes. No list
+  or leaf-list entries are
   single instance nodes, even if they have max-elements equal to one. If instance
-  is a child of list entry it is not a single instance node. Note that is term is
+  is a child of list entry it is not a single instance node. Note that this term is
   defined so that set of instance nodes that are uniquely identified by only YANG
   Schema Item iDentifier and set of single instance nodes are the same set.
 
@@ -117,53 +113,27 @@ Single instance node:
 The definitions of {{Section 6.13.1 of -yang-cbor}} applies with following
 exceptions:
 
-The encoding rules defined in the {{-yang-cbor}} for list apply only to keyed lists.
+The encoding rules for list apply only for keyed lists.
 
 In the case of a representation node that is an entry of a keyless list, a SID
 is combined with the list entry index is used to identify each instance within the
 keyless list. The index MUST be encoded using CBOR unsigned integer data item
-(major type 0). The index is 1-base to keep same indexing base as RESTCONF
+(major type 0). The index MUST be 1-base to keep same indexing base as RESTCONF
 {{-restconf}} and NETCONF {{-netconf}}.
 
-Instance-identifier of leaf-list entry with single instance parent MUST be
-encoded using a two-element CBOR array item (major type 4) containing the
-following CBOR data items:
+Instance-identifier of an instance that is not single instance node MUST be encoded using a CBOR array item (major type 4) containing the following CBOR data items:
+- The first element MUST be encoded as a CBOR unsigned integer data item (major type 0) and set to the targeted schema node SID. No delta mechanism for SID is used.
+- The next elements MUST contain the valu of each key required to identify the instance of the targeted schema node. These keys MUST be ordered as defined as defined in the 'key' YANG statement for keyed list.
+  The keys are encoded according the rules defined in {{-yang-cbor}} and this document. If the list is keyless list the key MUST be encoded using the CBOR unsigned integer data item (major type 0) as specified in this document.
+  The keys and indices of list hierarchy MUST be preserved.
+- If the instance is leaf-list entry, the last element MUST be encoded according to encoding rules defined in {{-yang-cbor}} and this document.
 
-- The first element MUST be encoded as a CBOR unsigned integer data item (major
-  type 0) and set to the targeted schema node SID.
+If the instance-identifier identifies a leaf-list with single instance node parent the resulting CBOR array MUST have two elements, the SID and the leaf-list value.
 
-- The second element MUST be encoding of the leaf-list entry value as defined by
-  this document or as defined by {{-yang-cbor}}.
+TODO: is this a good solution?
+The {{-yang}} allows leaf-list of state data to have duplicates. In this case, it is not defined which element the instance-identifier identifies.
 
-Instance-identifier of leaf-list with single instance node parent MUST be
-encoded using a CBOR unsigned integer set to targeted schema node SID.
-
-Instance-identifier of leaf-list entry, if entry's parent is not a single
-instance node, MUST be encoded using a CBOR array data item (major type 4)
-containing the following entries:
-
-- The first entry array MUST be encoded as a CBOR unsigned integer
-  data item (major type 0) and set to the targeted schema node SID.
-
-- The following entries MUST contain the value of each key required to identify
-  the instance of the targeted schema node. These keys MUST be ordered as defined
-  in the 'key' YANG statement, staring from the top-level list, and the followed
-  by each subordinate lists(s).
-
-- The last entry MUST be encoded according to rules defined for the targeted
-  node data type. These rules are defined in {{-yang-cbor}}.
-
-Instance-identifier of leaf-list with parent that is not a single instance node
-MUST be encoded using a CBOR array data item (major type 4) containing the
-following entries:
-
-- The first entry MUST be encoded as a CBOR unsigned integer data item (major
-  type 0) and set to the targeted schema node SID.
-
-- The following entries MUST contain the value of each key required to identify
-  the instance of the targeted schema node. These keys MUST be ordered as defined
-  in the 'key' YANG statement, starting from the top-level list, and follow by
-  each subordinate list(s).
+### Examples
 
 Definition example adapted from {{-yang}}:
 
@@ -186,32 +156,39 @@ container auth {
 }
 ~~~
 
+All examples are considered to live inside the "example" module namespace if not stated otherwise. Equivalent representation using the Names encoding may help readers already familiar with {{-yang-json}} JSON encoding.
+
 *First example:*
 The following example shows the encoding of the 'reporting-entity' value
-referencing keyless list "/adjacencies/adjacency" (which is assumed to have SID 68000) for second list entry. The example
+referencing 'neighbor-sysid" (which is assumed to have SID 68000) of keyless "/adjacencies/adjacency" list's second list entry. The example
 adapted from {{-isis}}:
 
 ~~~ yang
+// in module isis
 container adjacencies {
   config false;
   list adjacency {
     leaf neighbor-sysid {
       type string;
     }
+    leaf more-data {
+      type binary;
+    }
   }
 }
 ~~~
 
-CBOR diagnostic notation: `[68000, 2]`
+CBOR diagnostic notation: `[ 68000, 2 ]`
 
 CBOR encoding:
-~~~ cbor-pretty
+<!-- the ~~~ cbor-pretty does not work, I did not found any ruby gem with this name... -->
+```
 82 # array(2)
    1A 000109A0 # 68000
    02 # 2
-~~~
+```
 
-The equivalent RESTCONF resource identifier is "".
+Equivalent instance-identifier encoded using the Names (see {{Section 6.13.2 of -yang-cbor}}): `"/isis:adjacencies/adjacency[.=2]/neighbor-sysid"`
 
 *Second example:*
 
@@ -221,12 +198,15 @@ entry "alice".
 CBOR diagnostic notation: `[ 60000, "alice" ]`
 
 CBOR encoding:
-~~~ cbor-pretty
+```
 82               # array(2)
    19 F6F6       # unsigned(60000)
    65            # text(5)
       616c696365 # "alice"
-~~~
+```
+
+Equivalent instance-identifier encoded using the Names: `"/example:auth/foreigh-user[.="alice"]"`
+
 
 *Third example:*
 
@@ -236,13 +216,15 @@ CBOR diagnostic notation: `60000`
 
 CBOR encoding: `19 F6F6`
 
+Equivalent instance-identifier encoded using the Names: `"/example:auth/foreigh-user"`
+
 *Fourth example:*
 The following example shows the encoding of the 'reporting-entity' value referencing leaf-list instance "/user-group/user" (which is assumed to have SID 61000) entry "eve" for group-name "restricted".
 
 ~~~ yang
 list user-group {
   config true;
-  key "name"
+  key "group-name"
 
   leaf group-name {
     type string;
@@ -257,14 +239,16 @@ list user-group {
 CBOR diagnostic notation: `[ 61000, "restricted", "eve" ]`
 
 CBOR encoding:
-~~~ cbor-pretty
+```
 83   # array(3)
    19 EE48  # 61000
    6A # text(10)
       72657374726963746564 # "resricted"
    63 # text(3)
       657665 # "eve"
-~~~
+```
+
+Equivalent instance-identifier encoded using the Names: `"/example:user-group[group-name="restricted"]/user[.="eve"]"`
 
 
 *Fifth example:*
@@ -274,12 +258,14 @@ The following example shows the encoding of 'reporting-entity' value referencing
 CBOR diagnostic notation: `[ 61000, "restricted" ]`
 
 CBOR encoding:
-~~~ cbor-pretty
+```
 83   # array(3)
    19 EE48 # 61000
    6A # text(10)
       72657374726963746564 # "resricted"
-~~~
+```
+
+Equivalent instance-identifier encoded using the Names: `"/example:user-group[group-name="restricted"]"`
 
 Note that this encoding is same as if the node user was a leaf.
 
@@ -303,7 +289,7 @@ list working-group {
 CBOR diagnostic notation: `[ 62000, "core", [ 60000, "John Smith" ] ]`
 
 CBOR encoding:
-~~~ cbor-pretty
+```
 83 # array(3)
    19 F230 # 62000
    64 # text(4)
@@ -312,25 +298,76 @@ CBOR encoding:
       19 F6F6 # 60000
       6A # text(10)
          4a6f686e20536d697468 # "John Smith"
+```
+
+Equivalent instance-identifier encoded using the Names:
+`"/example:working-group[name="core"]/chair=[.="/example:auth/foreign-user[.="John Smith"]"]`
+
+TODO longer chains of leaf-list instance-identifier lead to high nesting of the CBOR array data items. Shoul a cap for the contrained nodes by put to simplify the implementations?
+I think cap around 8 should be suffient for most deployments. I think that using leaf-list instance-identifier chaining is not a good practise.
+
+*Seventh example:*
+The following exampke shows the encoding of 'reporting-entity' value referencing leaf 'token-data' of device with 'id' "id01", first 'security' list entry for user's 'bob' second 'access-token' list entry. The leaf 'token-data' is assumed to have SID 61500.
+
+~~~ yang
+list device {
+  key "id";
+
+  leaf id {
+    type string;
+  }
+
+  list security {
+    config false;
+
+    list user {
+      key "name";
+      leaf name;
+
+      list access-token {
+        leaf type {
+          type identityref { base token; }
+        }
+        leaf token-data {
+          type binary;
+        }
+      }
+    }
+  }
+}
+
+identity token;
 ~~~
 
+CBOR diagnostic notation: `[ 61500, "id01", 1, "bob", 2 ]`
+
+CBOR encoding:
+```
+84 # array(4)
+   19 F03C # 61500
+   64 # text(4)
+      69643031 # "id01"
+   01 # 1
+   63 # text(3)
+      626F62 # "bob"
+   02 # 2
+```
+
+Equivalent instance-identifier encoded using the Names: `"/example:device[id="id01"]/security[.=1]/user[user="bob"]/access-token[.=2]/token-data"`
+
 # Content-Types
-TODO check again that application/yang-data+cbor id=sid may not use instance-identifier encoded using Names {{Section 6.13.2 of -yang-cbor}}.
+TODO Is it possible to reuse the Content-types define in the {{-yang-cbor}}? It would be wasteful to assign new MIME content-type basically the same format.
 
 # Security Considerations
-
 The security considerations of {{-cbor}}, {{-yang}}, {{-yang-cbor}} and {{-yang-sid}} apply.
 
 TODO Security
 
 
 # IANA Considerations
-
-<!--
 This document has no IANA actions.
--->
 
-TODO note about changes (unfortunately this document will have an IANA action)
+TODO Is it possible to keep the same IANA allocations of th {{-yang-cbor}}? This draft wants to be more of a bugfix document than new encoding scheme.
 
 
 --- back
