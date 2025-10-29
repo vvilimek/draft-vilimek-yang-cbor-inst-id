@@ -145,11 +145,19 @@ This means that instance-identifier identifing a leaf-list instance with single
 instance node parent will result in a CBOR array with two elements, the SID as
 CBOR unsigned integer and leaf-list value representation.
 
+Instance-identifier of a list or leaf-list schema node is encoded in the same way as a list or leaf-list
+entry leaving out the targeted schema node identification. This identification is all the keys of keyed list,
+integer index of keyless list and instance of leaf-list. If the instance identifier would result in CBOR array data item
+having only a single element -- the SID -- the instance-identifier MUST be encoded according to rules for single instance nodes.
 
-TODO: is this a good solution?
+This means that instance-identifier of list or leaf-list with single instance node parent will result
+only in CBOR unsigned integer data item representing the SID.
 
-The YANG 1.1 {{-yang}} allows leaf-list of state data to have duplicates. In
+The YANG 1.1 {{-yang}} allows leaf-list of state data (config false) to have duplicates. In
 this case, it is not defined which element the instance-identifier identifies.
+
+TODO: If these encoding rules will be accepted by the working group consensus, then changes of draft I-D.core-comi (CORECONF) need to be done.
+We will get for free identification of keyless list instances that is impossible in RESTCONF.
 
 ### Examples
 
@@ -402,6 +410,8 @@ TODO Is it possible to reuse the Content-types define in the {{-yang-cbor}}? It 
 # Security Considerations
 The security considerations of {{-cbor}}, {{-yang}}, {{-yang-cbor}} and
 {{-yang-sid}} apply.
+
+The implementations should be aware of possibly very large recursive nesting that occurs when instance-identifiers are chained.
 
 TODO Security
 
