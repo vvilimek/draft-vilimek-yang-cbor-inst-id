@@ -4,9 +4,9 @@
 
 WG Working Group                                              V. Vilímek
 Internet-Draft                                                    CZ.NIC
-Updates: RFC9254 (if approved)                           16 October 2025
+Updates: RFC9254 (if approved)                           29 October 2025
 Intended status: Standards Track                                        
-Expires: 19 April 2026
+Expires: 2 May 2026
 
 
    Encoding rules of YANG 'instance-identifier' in the Concise Binary
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 19 April 2026.
+   This Internet-Draft will expire on 2 May 2026.
 
 Copyright Notice
 
@@ -193,11 +193,26 @@ Table of Contents
    elements, the SID as CBOR unsigned integer and leaf-list value
    representation.
 
-   TODO: is this a good solution?
+   Instance-identifier of a list or leaf-list schema node is encoded in
+   the same way as a list or leaf-list entry leaving out the targeted
+   schema node identification.  This identification is all the keys of
+   keyed list, integer index of keyless list and instance of leaf-list.
+   If the instance identifier would result in CBOR array data item
+   having only a single element -- the SID -- the instance-identifier
+   MUST be encoded according to rules for single instance nodes.
 
-   The YANG 1.1 [RFC7950] allows leaf-list of state data to have
-   duplicates.  In this case, it is not defined which element the
-   instance-identifier identifies.
+   This means that instance-identifier of list or leaf-list with single
+   instance node parent will result only in CBOR unsigned integer data
+   item representing the SID.
+
+   The YANG 1.1 [RFC7950] allows leaf-list of state data (config false)
+   to have duplicates.  In this case, it is not defined which element
+   the instance-identifier identifies.
+
+   TODO: If these encoding rules will be accepted by the working group
+   consensus, then changes of draft I-D.core-comi (CORECONF) need to be
+   done.  We will get for free identification of keyless list instances
+   that is impossible in RESTCONF.
 
 3.1.1.  Examples
 
@@ -409,6 +424,9 @@ Table of Contents
 
    The security considerations of [RFC8949], [RFC7950], [RFC9254] and
    [RFC9595] apply.
+
+   The implementations should be aware of possibly very large recursive
+   nesting that occurs when instance-identifiers are chained.
 
    TODO Security
 
