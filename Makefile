@@ -1,6 +1,3 @@
-# based on Makefile for similar Markdown draft
-# https://github.com/cabo/yang-standin
-
 LIBDIR := lib
 include $(LIBDIR)/main.mk
 
