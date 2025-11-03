@@ -214,11 +214,11 @@ CBOR diagnostic notation: `[ 68000, 2 ]`
 CBOR encoding:
 <!-- TODO FIXME the ~~~ cbor-pretty does not work, I did not found any ruby gem
      with this name... -->
-```
+~~~ cbor-pretty
 82 # array(2)
    1A 000109A0 # 68000
    02 # 2
-```
+~~~
 
 Equivalent instance-identifier encoded using the Names:
 `"/isis:adjacencies/adjacency[.=2]/neighbor-sysid"`
@@ -232,12 +232,12 @@ SID 60000) entry "alice".
 CBOR diagnostic notation: `[ 60000, "alice" ]`
 
 CBOR encoding:
-```
+~~~ cbor-pretty
 82               # array(2)
    19 F6F6       # unsigned(60000)
    65            # text(5)
       616c696365 # "alice"
-```
+~~~
 
 Equivalent instance-identifier encoded using the Names:
 `"/example:auth/foreigh-user[.="alice"]"`
@@ -278,14 +278,14 @@ list user-group {
 CBOR diagnostic notation: `[ 61000, "restricted", "eve" ]`
 
 CBOR encoding:
-```
+~~~ cbor-pretty
 83   # array(3)
    19 EE48  # 61000
    6A # text(10)
       72657374726963746564 # "resricted"
    63 # text(3)
       657665 # "eve"
-```
+~~~
 
 Equivalent instance-identifier encoded using the Names:
 `"/example:user-group[group-name="restricted"]/user[.="eve"]"`
@@ -299,12 +299,12 @@ referencing leaf-list instance "/user-group/user" for group name "restricted".
 CBOR diagnostic notation: `[ 61000, "restricted" ]`
 
 CBOR encoding:
-```
+~~~ cbor-pretty
 83   # array(3)
    19 EE48 # 61000
    6A # text(10)
       72657374726963746564 # "resricted"
-```
+~~~
 
 Equivalent instance-identifier encoded using the Names:
 `"/example:user-group[group-name="restricted"]"`
@@ -333,7 +333,7 @@ list working-group {
 CBOR diagnostic notation: `[ 62000, "core", [ 60000, "John Smith" ] ]`
 
 CBOR encoding:
-```
+~~~ cbor-pretty
 83 # array(3)
    19 F230 # 62000
    64 # text(4)
@@ -342,7 +342,7 @@ CBOR encoding:
       19 F6F6 # 60000
       6A # text(10)
          4a6f686e20536d697468 # "John Smith"
-```
+~~~
 
 Equivalent instance-identifier encoded using the Names:
 `"/example:working-group[name="core"]/chair=[.="/example:auth/foreign-user[.="John Smith"]"]`
@@ -390,7 +390,7 @@ identity token;
 CBOR diagnostic notation: `[ 61500, "id01", 1, "bob", 2 ]`
 
 CBOR encoding:
-```
+~~~ cbor-pretty
 84 # array(4)
    19 F03C # 61500
    64 # text(4)
@@ -399,7 +399,7 @@ CBOR encoding:
    63 # text(3)
       626F62 # "bob"
    02 # 2
-```
+~~~
 
 Equivalent instance-identifier encoded using the Names:
 `"/example:device[id="id01"]/security[.=1]/user[user="bob"]/access-token[.=2]/token-data"`
