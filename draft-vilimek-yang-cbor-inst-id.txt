@@ -4,9 +4,9 @@
 
 WG Working Group                                              V. Vilímek
 Internet-Draft                                                    CZ.NIC
-Updates: RFC9254 (if approved)                           29 October 2025
+Updates: RFC9254 (if approved)                           3 November 2025
 Intended status: Standards Track                                        
-Expires: 2 May 2026
+Expires: 7 May 2026
 
 
    Encoding rules of YANG 'instance-identifier' in the Concise Binary
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 May 2026.
+   This Internet-Draft will expire on 7 May 2026.
 
 Copyright Notice
 
@@ -262,7 +262,11 @@ Table of Contents
 
    CBOR diagnostic notation: [ 68000, 2 ]
 
-   CBOR encoding: 82 # array(2) 1A 000109A0 # 68000 02 # 2
+   CBOR encoding:
+
+   82 # array(2)
+      1A 000109A0 # 68000
+      02 # 2
 
    Equivalent instance-identifier encoded using the Names:
    "/isis:adjacencies/adjacency[.=2]/neighbor-sysid"
@@ -275,8 +279,12 @@ Table of Contents
 
    CBOR diagnostic notation: [ 60000, "alice" ]
 
-   CBOR encoding: 82 # array(2) 19 F6F6 # unsigned(60000) 65 # text(5)
-   616c696365 # "alice"
+   CBOR encoding:
+
+   82               # array(2)
+      19 F6F6       # unsigned(60000)
+      65            # text(5)
+         616c696365 # "alice"
 
    Equivalent instance-identifier encoded using the Names:
    "/example:auth/foreigh-user[.="alice"]"
@@ -315,8 +323,14 @@ Table of Contents
 
    CBOR diagnostic notation: [ 61000, "restricted", "eve" ]
 
-   CBOR encoding: 83 # array(3) 19 EE48 # 61000 6A # text(10)
-   72657374726963746564 # "resricted" 63 # text(3) 657665 # "eve"
+   CBOR encoding:
+
+   83   # array(3)
+      19 EE48  # 61000
+      6A # text(10)
+         72657374726963746564 # "resricted"
+      63 # text(3)
+         657665 # "eve"
 
    Equivalent instance-identifier encoded using the Names:
    "/example:user-group[group-name="restricted"]/user[.="eve"]"
@@ -329,8 +343,12 @@ Table of Contents
 
    CBOR diagnostic notation: [ 61000, "restricted" ]
 
-   CBOR encoding: 83 # array(3) 19 EE48 # 61000 6A # text(10)
-   72657374726963746564 # "resricted"
+   CBOR encoding:
+
+   83   # array(3)
+      19 EE48 # 61000
+      6A # text(10)
+         72657374726963746564 # "resricted"
 
    Equivalent instance-identifier encoded using the Names:
    "/example:user-group[group-name="restricted"]"
@@ -356,9 +374,16 @@ Table of Contents
 
    CBOR diagnostic notation: [ 62000, "core", [ 60000, "John Smith" ] ]
 
-   CBOR encoding: 83 # array(3) 19 F230 # 62000 64 # text(4) 636F7265 #
-   "core" 82 # array(2) 19 F6F6 # 60000 6A # text(10)
-   4a6f686e20536d697468 # "John Smith"
+   CBOR encoding:
+
+   83 # array(3)
+      19 F230 # 62000
+      64 # text(4)
+         636F7265 # "core"
+      82 # array(2)
+         19 F6F6 # 60000
+         6A # text(10)
+            4a6f686e20536d697468 # "John Smith"
 
    Equivalent instance-identifier encoded using the Names:
    "/example:working-group[name="core"]/chair=[.="/example:auth/foreign-
@@ -407,8 +432,16 @@ Table of Contents
 
    CBOR diagnostic notation: [ 61500, "id01", 1, "bob", 2 ]
 
-   CBOR encoding: 84 # array(4) 19 F03C # 61500 64 # text(4) 69643031 #
-   "id01" 01 # 1 63 # text(3) 626F62 # "bob" 02 # 2
+   CBOR encoding:
+
+   84 # array(4)
+      19 F03C # 61500
+      64 # text(4)
+         69643031 # "id01"
+      01 # 1
+      63 # text(3)
+         626F62 # "bob"
+      02 # 2
 
    Equivalent instance-identifier encoded using the Names:
    "/example:device[id="id01"]/security[.=1]/user[user="bob"]/access-

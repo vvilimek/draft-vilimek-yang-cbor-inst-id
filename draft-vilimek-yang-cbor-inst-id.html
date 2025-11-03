@@ -1047,11 +1047,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">yang-cbor-inst-id</td>
-<td class="right">October 2025</td>
+<td class="right">November 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Vilímek</td>
-<td class="center">Expires 2 May 2026</td>
+<td class="center">Expires 7 May 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1067,12 +1067,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="https://www.rfc-editor.org/rfc/rfcRFC9254" class="eref">RFC9254</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-10-29" class="published">29 October 2025</time>
+<time datetime="2025-11-03" class="published">3 November 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-05-02">2 May 2026</time></dd>
+<dd class="expires"><time datetime="2026-05-07">7 May 2026</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1123,7 +1123,7 @@ rules for this data type.<a href="#section-abstract-1" class="pilcrow">¶</a></p
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 2 May 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 7 May 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1400,39 +1400,43 @@ container adjacencies {
 </pre><a href="#section-3.1.1-8" class="pilcrow">¶</a>
 </div>
 <p id="section-3.1.1-9">CBOR diagnostic notation: <code>[ 68000, 2 ]</code><a href="#section-3.1.1-9" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-10">CBOR encoding:
-<code>
+<p id="section-3.1.1-10">CBOR encoding:<a href="#section-3.1.1-10" class="pilcrow">¶</a></p>
+<div class="lang-cbor-pretty sourcecode" id="section-3.1.1-11">
+<pre>
 82 # array(2)
    1A 000109A0 # 68000
    02 # 2
-</code><a href="#section-3.1.1-10" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-11">Equivalent instance-identifier encoded using the Names:
-<code>"/isis:adjacencies/adjacency[.=2]/neighbor-sysid"</code><a href="#section-3.1.1-11" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-12"><em>Second example:</em><a href="#section-3.1.1-12" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-13">The following example shows the encoding of the 'reporting-entity' value
+</pre><a href="#section-3.1.1-11" class="pilcrow">¶</a>
+</div>
+<p id="section-3.1.1-12">Equivalent instance-identifier encoded using the Names:
+<code>"/isis:adjacencies/adjacency[.=2]/neighbor-sysid"</code><a href="#section-3.1.1-12" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-13"><em>Second example:</em><a href="#section-3.1.1-13" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-14">The following example shows the encoding of the 'reporting-entity' value
 referencing leaf-list instance "/auth/foreign-user" (which is assumed to have
-SID 60000) entry "alice".<a href="#section-3.1.1-13" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-14">CBOR diagnostic notation: <code>[ 60000, "alice" ]</code><a href="#section-3.1.1-14" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-15">CBOR encoding:
-<code>
+SID 60000) entry "alice".<a href="#section-3.1.1-14" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-15">CBOR diagnostic notation: <code>[ 60000, "alice" ]</code><a href="#section-3.1.1-15" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-16">CBOR encoding:<a href="#section-3.1.1-16" class="pilcrow">¶</a></p>
+<div class="lang-cbor-pretty sourcecode" id="section-3.1.1-17">
+<pre>
 82               # array(2)
    19 F6F6       # unsigned(60000)
    65            # text(5)
       616c696365 # "alice"
-</code><a href="#section-3.1.1-15" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-16">Equivalent instance-identifier encoded using the Names:
-<code>"/example:auth/foreigh-user[.="alice"]"</code><a href="#section-3.1.1-16" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-17"><em>Third example:</em><a href="#section-3.1.1-17" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-18">The following example show the encoding of the 'reporting-entity' value
-referencing leaf-list instance "/auth/foreign-user" (SID 60000).<a href="#section-3.1.1-18" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-19">CBOR diagnostic notation: <code>60000</code><a href="#section-3.1.1-19" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-20">CBOR encoding: <code>19 F6F6</code><a href="#section-3.1.1-20" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-21">Equivalent instance-identifier encoded using the Names: <code>"/example:auth/foreigh-user"</code><a href="#section-3.1.1-21" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-22"><em>Fourth example:</em><a href="#section-3.1.1-22" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-23">The following example shows the encoding of the 'reporting-entity' value
+</pre><a href="#section-3.1.1-17" class="pilcrow">¶</a>
+</div>
+<p id="section-3.1.1-18">Equivalent instance-identifier encoded using the Names:
+<code>"/example:auth/foreigh-user[.="alice"]"</code><a href="#section-3.1.1-18" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-19"><em>Third example:</em><a href="#section-3.1.1-19" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-20">The following example show the encoding of the 'reporting-entity' value
+referencing leaf-list instance "/auth/foreign-user" (SID 60000).<a href="#section-3.1.1-20" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-21">CBOR diagnostic notation: <code>60000</code><a href="#section-3.1.1-21" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-22">CBOR encoding: <code>19 F6F6</code><a href="#section-3.1.1-22" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-23">Equivalent instance-identifier encoded using the Names: <code>"/example:auth/foreigh-user"</code><a href="#section-3.1.1-23" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-24"><em>Fourth example:</em><a href="#section-3.1.1-24" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-25">The following example shows the encoding of the 'reporting-entity' value
 referencing leaf-list instance "/user-group/user" (which is assumed to have SID
-61000) entry "eve" for group-name "restricted".<a href="#section-3.1.1-23" class="pilcrow">¶</a></p>
-<div class="lang-yang sourcecode" id="section-3.1.1-24">
+61000) entry "eve" for group-name "restricted".<a href="#section-3.1.1-25" class="pilcrow">¶</a></p>
+<div class="lang-yang sourcecode" id="section-3.1.1-26">
 <pre>
 list user-group {
   config true;
@@ -1446,40 +1450,44 @@ list user-group {
     type string;
   }
 }
-</pre><a href="#section-3.1.1-24" class="pilcrow">¶</a>
+</pre><a href="#section-3.1.1-26" class="pilcrow">¶</a>
 </div>
-<p id="section-3.1.1-25">CBOR diagnostic notation: <code>[ 61000, "restricted", "eve" ]</code><a href="#section-3.1.1-25" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-26">CBOR encoding:
-<code>
+<p id="section-3.1.1-27">CBOR diagnostic notation: <code>[ 61000, "restricted", "eve" ]</code><a href="#section-3.1.1-27" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-28">CBOR encoding:<a href="#section-3.1.1-28" class="pilcrow">¶</a></p>
+<div class="lang-cbor-pretty sourcecode" id="section-3.1.1-29">
+<pre>
 83   # array(3)
    19 EE48  # 61000
    6A # text(10)
       72657374726963746564 # "resricted"
    63 # text(3)
       657665 # "eve"
-</code><a href="#section-3.1.1-26" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-27">Equivalent instance-identifier encoded using the Names:
-<code>"/example:user-group[group-name="restricted"]/user[.="eve"]"</code><a href="#section-3.1.1-27" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-28"><em>Fifth example:</em><a href="#section-3.1.1-28" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-29">The following example shows the encoding of 'reporting-entity' value
-referencing leaf-list instance "/user-group/user" for group name "restricted".<a href="#section-3.1.1-29" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-30">CBOR diagnostic notation: <code>[ 61000, "restricted" ]</code><a href="#section-3.1.1-30" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-31">CBOR encoding:
-<code>
+</pre><a href="#section-3.1.1-29" class="pilcrow">¶</a>
+</div>
+<p id="section-3.1.1-30">Equivalent instance-identifier encoded using the Names:
+<code>"/example:user-group[group-name="restricted"]/user[.="eve"]"</code><a href="#section-3.1.1-30" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-31"><em>Fifth example:</em><a href="#section-3.1.1-31" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-32">The following example shows the encoding of 'reporting-entity' value
+referencing leaf-list instance "/user-group/user" for group name "restricted".<a href="#section-3.1.1-32" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-33">CBOR diagnostic notation: <code>[ 61000, "restricted" ]</code><a href="#section-3.1.1-33" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-34">CBOR encoding:<a href="#section-3.1.1-34" class="pilcrow">¶</a></p>
+<div class="lang-cbor-pretty sourcecode" id="section-3.1.1-35">
+<pre>
 83   # array(3)
    19 EE48 # 61000
    6A # text(10)
       72657374726963746564 # "resricted"
-</code><a href="#section-3.1.1-31" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-32">Equivalent instance-identifier encoded using the Names:
-<code>"/example:user-group[group-name="restricted"]"</code><a href="#section-3.1.1-32" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-33">Note that this encoding is same as if the node user was a leaf.<a href="#section-3.1.1-33" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-34"><em>Sixth example:</em><a href="#section-3.1.1-34" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-35">The following example shows the encoding of 'reporting-entity' value
+</pre><a href="#section-3.1.1-35" class="pilcrow">¶</a>
+</div>
+<p id="section-3.1.1-36">Equivalent instance-identifier encoded using the Names:
+<code>"/example:user-group[group-name="restricted"]"</code><a href="#section-3.1.1-36" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-37">Note that this encoding is same as if the node user was a leaf.<a href="#section-3.1.1-37" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-38"><em>Sixth example:</em><a href="#section-3.1.1-38" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-39">The following example shows the encoding of 'reporting-entity' value
 referencing leaf-list instance "/working-group/chair" entry. This entry
 references "/auth/foreign-user" leaf-list entry "John Smith". The
-"/working-group/chair" is assumed to have SID 62000.<a href="#section-3.1.1-35" class="pilcrow">¶</a></p>
-<div class="lang-yang sourcecode" id="section-3.1.1-36">
+"/working-group/chair" is assumed to have SID 62000.<a href="#section-3.1.1-39" class="pilcrow">¶</a></p>
+<div class="lang-yang sourcecode" id="section-3.1.1-40">
 <pre>
 list working-group {
   leaf name {
@@ -1490,11 +1498,12 @@ list working-group {
     type instance-identifier;
   }
 }
-</pre><a href="#section-3.1.1-36" class="pilcrow">¶</a>
+</pre><a href="#section-3.1.1-40" class="pilcrow">¶</a>
 </div>
-<p id="section-3.1.1-37">CBOR diagnostic notation: <code>[ 62000, "core", [ 60000, "John Smith" ] ]</code><a href="#section-3.1.1-37" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-38">CBOR encoding:
-<code>
+<p id="section-3.1.1-41">CBOR diagnostic notation: <code>[ 62000, "core", [ 60000, "John Smith" ] ]</code><a href="#section-3.1.1-41" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-42">CBOR encoding:<a href="#section-3.1.1-42" class="pilcrow">¶</a></p>
+<div class="lang-cbor-pretty sourcecode" id="section-3.1.1-43">
+<pre>
 83 # array(3)
    19 F230 # 62000
    64 # text(4)
@@ -1503,17 +1512,18 @@ list working-group {
       19 F6F6 # 60000
       6A # text(10)
          4a6f686e20536d697468 # "John Smith"
-</code><a href="#section-3.1.1-38" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-39">Equivalent instance-identifier encoded using the Names:
-<code>"/example:working-group[name="core"]/chair=[.="/example:auth/foreign-user[.="John Smith"]"]</code><a href="#section-3.1.1-39" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-40">TODO longer chains of leaf-list instance-identifier lead to high nesting of the CBOR array data items. Shoul a cap for the contrained nodes by put to simplify the implementations?
-I think cap around 8 should be suffient for most deployments. I think that using leaf-list instance-identifier chaining is not a good practise.<a href="#section-3.1.1-40" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-41"><em>Seventh example:</em><a href="#section-3.1.1-41" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-42">The following exampke shows the encoding of 'reporting-entity' value
+</pre><a href="#section-3.1.1-43" class="pilcrow">¶</a>
+</div>
+<p id="section-3.1.1-44">Equivalent instance-identifier encoded using the Names:
+<code>"/example:working-group[name="core"]/chair=[.="/example:auth/foreign-user[.="John Smith"]"]</code><a href="#section-3.1.1-44" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-45">TODO longer chains of leaf-list instance-identifier lead to high nesting of the CBOR array data items. Shoul a cap for the contrained nodes by put to simplify the implementations?
+I think cap around 8 should be suffient for most deployments. I think that using leaf-list instance-identifier chaining is not a good practise.<a href="#section-3.1.1-45" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-46"><em>Seventh example:</em><a href="#section-3.1.1-46" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-47">The following exampke shows the encoding of 'reporting-entity' value
 referencing leaf 'token-data' of device with 'id' "id01", first 'security' list
 entry for user's 'bob' second 'access-token' list entry. The leaf 'token-data'
-is assumed to have SID 61500.<a href="#section-3.1.1-42" class="pilcrow">¶</a></p>
-<div class="lang-yang sourcecode" id="section-3.1.1-43">
+is assumed to have SID 61500.<a href="#section-3.1.1-47" class="pilcrow">¶</a></p>
+<div class="lang-yang sourcecode" id="section-3.1.1-48">
 <pre>
 list device {
   key "id";
@@ -1542,11 +1552,12 @@ list device {
 }
 
 identity token;
-</pre><a href="#section-3.1.1-43" class="pilcrow">¶</a>
+</pre><a href="#section-3.1.1-48" class="pilcrow">¶</a>
 </div>
-<p id="section-3.1.1-44">CBOR diagnostic notation: <code>[ 61500, "id01", 1, "bob", 2 ]</code><a href="#section-3.1.1-44" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-45">CBOR encoding:
-<code>
+<p id="section-3.1.1-49">CBOR diagnostic notation: <code>[ 61500, "id01", 1, "bob", 2 ]</code><a href="#section-3.1.1-49" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-50">CBOR encoding:<a href="#section-3.1.1-50" class="pilcrow">¶</a></p>
+<div class="lang-cbor-pretty sourcecode" id="section-3.1.1-51">
+<pre>
 84 # array(4)
    19 F03C # 61500
    64 # text(4)
@@ -1555,9 +1566,10 @@ identity token;
    63 # text(3)
       626F62 # "bob"
    02 # 2
-</code><a href="#section-3.1.1-45" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-46">Equivalent instance-identifier encoded using the Names:
-<code>"/example:device[id="id01"]/security[.=1]/user[user="bob"]/access-token[.=2]/token-data"</code><a href="#section-3.1.1-46" class="pilcrow">¶</a></p>
+</pre><a href="#section-3.1.1-51" class="pilcrow">¶</a>
+</div>
+<p id="section-3.1.1-52">Equivalent instance-identifier encoded using the Names:
+<code>"/example:device[id="id01"]/security[.=1]/user[user="bob"]/access-token[.=2]/token-data"</code><a href="#section-3.1.1-52" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
