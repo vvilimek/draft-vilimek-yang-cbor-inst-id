@@ -212,13 +212,11 @@ container adjacencies {
 CBOR diagnostic notation: `[ 68000, 2 ]`
 
 CBOR encoding:
-<!-- TODO FIXME the ~~~ cbor-pretty does not work, I did not found any ruby gem
-     with this name... -->
 
 ~~~ cbor-pretty
-82 # array(2)
-   1A 000109A0 # 68000
-   02 # 2
+82              # array(2)
+   1A 000109A0  # 68000
+   02           # 2
 ~~~
 
 Equivalent instance-identifier encoded using the Names:
@@ -282,12 +280,12 @@ CBOR diagnostic notation: `[ 61000, "restricted", "eve" ]`
 CBOR encoding:
 
 ~~~ cbor-pretty
-83   # array(3)
-   19 EE48  # 61000
-   6A # text(10)
+83                         # array(3)
+   19 EE48                 # 61000
+   6A                      # text(10)
       72657374726963746564 # "resricted"
-   63 # text(3)
-      657665 # "eve"
+   63                      # text(3)
+      657665               # "eve"
 ~~~
 
 Equivalent instance-identifier encoded using the Names:
@@ -304,9 +302,9 @@ CBOR diagnostic notation: `[ 61000, "restricted" ]`
 CBOR encoding:
 
 ~~~ cbor-pretty
-83   # array(3)
-   19 EE48 # 61000
-   6A # text(10)
+83                         # array(3)
+   19 EE48                 # 61000
+   6A                      # text(10)
       72657374726963746564 # "resricted"
 ~~~
 
@@ -339,13 +337,13 @@ CBOR diagnostic notation: `[ 62000, "core", [ 60000, "John Smith" ] ]`
 CBOR encoding:
 
 ~~~ cbor-pretty
-83 # array(3)
-   19 F230 # 62000
-   64 # text(4)
-      636F7265 # "core"
-   82 # array(2)
-      19 F6F6 # 60000
-      6A # text(10)
+83                            # array(3)
+   19 F230                    # 62000
+   64                         # text(4)
+      636F7265                # "core"
+   82                         # array(2)
+      19 F6F6                 # 60000
+      6A                      # text(10)
          4a6f686e20536d697468 # "John Smith"
 ~~~
 
@@ -397,14 +395,14 @@ CBOR diagnostic notation: `[ 61500, "id01", 1, "bob", 2 ]`
 CBOR encoding:
 
 ~~~ cbor-pretty
-84 # array(4)
-   19 F03C # 61500
-   64 # text(4)
+84             # array(4)
+   19 F03C     # 61500
+   64          # text(4)
       69643031 # "id01"
-   01 # 1
-   63 # text(3)
-      626F62 # "bob"
-   02 # 2
+   01          # 1
+   63          # text(3)
+      626F62   # "bob"
+   02          # 2
 ~~~
 
 Equivalent instance-identifier encoded using the Names:
