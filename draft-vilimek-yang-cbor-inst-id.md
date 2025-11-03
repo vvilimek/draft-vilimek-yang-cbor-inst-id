@@ -214,6 +214,7 @@ CBOR diagnostic notation: `[ 68000, 2 ]`
 CBOR encoding:
 <!-- TODO FIXME the ~~~ cbor-pretty does not work, I did not found any ruby gem
      with this name... -->
+
 ~~~ cbor-pretty
 82 # array(2)
    1A 000109A0 # 68000
@@ -232,6 +233,7 @@ SID 60000) entry "alice".
 CBOR diagnostic notation: `[ 60000, "alice" ]`
 
 CBOR encoding:
+
 ~~~ cbor-pretty
 82               # array(2)
    19 F6F6       # unsigned(60000)
@@ -278,6 +280,7 @@ list user-group {
 CBOR diagnostic notation: `[ 61000, "restricted", "eve" ]`
 
 CBOR encoding:
+
 ~~~ cbor-pretty
 83   # array(3)
    19 EE48  # 61000
@@ -299,6 +302,7 @@ referencing leaf-list instance "/user-group/user" for group name "restricted".
 CBOR diagnostic notation: `[ 61000, "restricted" ]`
 
 CBOR encoding:
+
 ~~~ cbor-pretty
 83   # array(3)
    19 EE48 # 61000
@@ -333,6 +337,7 @@ list working-group {
 CBOR diagnostic notation: `[ 62000, "core", [ 60000, "John Smith" ] ]`
 
 CBOR encoding:
+
 ~~~ cbor-pretty
 83 # array(3)
    19 F230 # 62000
@@ -390,6 +395,7 @@ identity token;
 CBOR diagnostic notation: `[ 61500, "id01", 1, "bob", 2 ]`
 
 CBOR encoding:
+
 ~~~ cbor-pretty
 84 # array(4)
    19 F03C # 61500
