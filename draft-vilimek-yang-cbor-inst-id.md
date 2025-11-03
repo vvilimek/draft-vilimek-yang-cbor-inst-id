@@ -145,10 +145,8 @@ This means that instance-identifier identifing a leaf-list instance with single
 instance node parent will result in a CBOR array with two elements, the SID as
 CBOR unsigned integer and leaf-list value representation.
 
-Instance-identifier of a list or leaf-list schema node is encoded in the same way as a list or leaf-list
-entry leaving out the targeted schema node identification. This identification is all the keys of keyed list,
-integer index of keyless list and instance of leaf-list. If the instance identifier would result in CBOR array data item
-having only a single element -- the SID -- the instance-identifier MUST be encoded according to rules for single instance nodes.
+Due to restriction set by {{Section 9.13 of -yang}} it is not possible to point the instance-identifier to list or leaf-list schema node.
+Only instance data (i.e. nodes in data tree) are targetable.
 
 This means that instance-identifier of list or leaf-list with single instance node parent will result
 only in CBOR unsigned integer data item representing the SID.
@@ -242,19 +240,7 @@ CBOR encoding:
 Equivalent instance-identifier encoded using the Names:
 `"/example:auth/foreigh-user[.="alice"]"`
 
-
 *Third example:*
-
-The following example show the encoding of the 'reporting-entity' value
-referencing leaf-list instance "/auth/foreign-user" (SID 60000).
-
-CBOR diagnostic notation: `60000`
-
-CBOR encoding: `19 F6F6`
-
-Equivalent instance-identifier encoded using the Names: `"/example:auth/foreigh-user"`
-
-*Fourth example:*
 
 The following example shows the encoding of the 'reporting-entity' value
 referencing leaf-list instance "/user-group/user" (which is assumed to have SID
@@ -292,7 +278,7 @@ Equivalent instance-identifier encoded using the Names:
 `"/example:user-group[group-name="restricted"]/user[.="eve"]"`
 
 
-*Fifth example:*
+*Fourth example:*
 
 The following example shows the encoding of 'reporting-entity' value
 referencing leaf-list instance "/user-group/user" for group name "restricted".
@@ -313,7 +299,7 @@ Equivalent instance-identifier encoded using the Names:
 
 Note that this encoding is same as if the node user was a leaf.
 
-*Sixth example:*
+*Fifth example:*
 
 The following example shows the encoding of 'reporting-entity' value
 referencing leaf-list instance "/working-group/chair" entry. This entry
@@ -353,7 +339,7 @@ Equivalent instance-identifier encoded using the Names:
 TODO longer chains of leaf-list instance-identifier lead to high nesting of the CBOR array data items. Shoul a cap for the contrained nodes by put to simplify the implementations?
 I think cap around 8 should be suffient for most deployments. I think that using leaf-list instance-identifier chaining is not a good practise.
 
-*Seventh example:*
+*Sixth example:*
 
 The following exampke shows the encoding of 'reporting-entity' value
 referencing leaf 'token-data' of device with 'id' "id01", first 'security' list
