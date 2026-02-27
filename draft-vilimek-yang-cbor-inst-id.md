@@ -55,9 +55,9 @@ rules for this data type.
 
 # Introduction
 
-The RFC 9254 Encoding Rules of Data Modeled with YANG in the Concise Binary
+The RFC 9254: Encoding Rules of Data Modeled with YANG in the Concise Binary
 Object Representation (CBOR) does not define encoding rules for
-'instance-identifier' pointing to list without keys entry instances and
+'instance-identifier' pointing to keyless list entry instances and
 instances of leaf-list entries. The goal of this document is to define the
 missing rules and make clarifications in the used terminology.
 
@@ -79,15 +79,13 @@ The following term is defined in {{-cbor}}:
 
 The following terms are defined in {{-yang-cbor}}:
 
+- YANG Scheme Item iDentifier (YANG SID, or simply SID)
 - delta (of YANG SIDs)
 - absolute SID
 
 The following terms are defined in {{-yang-sid}}:
 
 - item
-- YANG Schema Item iDentifier (or "YANG SID" or simply "SID")
-
-Note that the {{-yang-cbor}} also define term YANG Schema Item iDentifier but the definition describe the same term.
 
 TODO: use the "The following terms are used within this document:" header?
 
@@ -96,16 +94,15 @@ Keyless list:
 
 Keyed list:
 : Is YANG list that is not a keyless list. It is either a config true list or
-  config false list with at least one key.
+  config false list with at least one key. Recall that config true list must have some keys.
 
 Single instance node:
-: Is a instance node with at most one possible instantiation. Instantiations of
-  top-level containers are single instance nodes, instantiations of leafs of
-  toplevel containers are single instance nodes. Container and leaf
-  instantiations of single instance node are also single instance nodes. No list
-  or leaf-list entries are
-  single instance nodes, even if they have max-elements equal to one. If instance
-  is a child of list entry it is not a single instance node. Note that this term is
+: Is a instance node with at most one possible instantiation.
+  Instantiation of top-level containers and top-level leafs are single instance nodes.
+  Instantiation of containers and leafs children of single instance nodes are single instance.
+  List entries and leaf-list entries are NOT single instance nodes, even if they have max-elements equal to one.
+  If instance is a child of list entry then it is not a single instance node.
+  Note that this term is
   defined so that set of instance nodes that are uniquely identified by only YANG
   Schema Item iDentifier and set of single instance nodes are the same set.
 
@@ -147,9 +144,6 @@ CBOR unsigned integer and leaf-list value representation.
 
 Due to restriction set by {{Section 9.13 of -yang}} it is not possible to point the instance-identifier to list or leaf-list schema node.
 Only instance data (i.e. nodes in data tree) are targetable.
-
-This means that instance-identifier of list or leaf-list with single instance node parent will result
-only in CBOR unsigned integer data item representing the SID.
 
 The YANG 1.1 {{-yang}} allows leaf-list of state data (config false) to have duplicates. In
 this case, it is not defined which element the instance-identifier identifies.
