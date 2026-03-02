@@ -137,10 +137,8 @@ container adjacencies {
 ~~~
 
 We want to represent `reporting-entity` so that the value is
-`"/isis:adjacencies/adjacency[.=2]/neighbor-sysid"`
- instance-identifier, but we want to use SIDs
+`"/isis:adjacencies/adjacency[.=2]/neighbor-sysid"`, but we want to use SIDs.
 Becuase the YANG list does not specify any keys, we will use index-based identification.
-Becuase the YANG do not specify any keys, we will resort to index based identification.
 
 CBOR diagnostic notation: `[ 68000, 2 ]`
 
@@ -157,8 +155,8 @@ Where `68000` is absolute SID and `2` is 1-based index of the list entry.
 ## Rules
 
 The definitions of {{Section 6.13.1 of -yang-cbor}} require that the list entries are
-encoded as CBOR array with SID as first element, followed by keys in order same as walk from
-schema root to the targeted child node. This formulation only applies to keyed lists.
+encoded as CBOR array with SID as the first element, followed by keys in same order as walking from
+the schema root to the targeted child node. This formulation only applies to keyed lists.
 
 For keyless lists, the entry identification MUST be encoded using a CBOR unsigned integer data item
 (major type 0). The index MUST be 1-based to maintain the same indexing base as RESTCONF {{-restconf}}
@@ -170,7 +168,7 @@ be encoded according to the encoding rules for the given leaf-list's type.
 The YANG 1.1 {{-yang}} allows a leaf-list of state data (config false) to have duplicates. In
 this case, it is not defined which element the instance-identifier identifies.
 
-Due to restriction set forth in {{Section 9.13 of -yang}} it is not possible to point the instance-identifier to a list or a leaf-list schema node.
+Due to restrictions set forth in {{Section 9.13 of -yang}} it is not possible to point the instance-identifier to a list or a leaf-list schema node.
 Only instance data (i.e. nodes in the data tree) can be targeted.
 
 TODO: If these encoding rules are accepted by the working group consensus, changes to the draft I-D.core-comi (CORECONF) will be necessary.
